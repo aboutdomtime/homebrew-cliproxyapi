@@ -20,7 +20,29 @@ class Cliproxyapi < Formula
   end
 
   def install
-    bin.install "cli-proxy-api" => "cliproxyapi"
+    libexec.install "cli-proxy-api"
+    (bin/"cliproxyapi").write <<~EOS
+      #!/bin/bash
+      set -euo pipefail
+
+      for arg in "$@"; do
+        case "$arg" in
+          -config|--config|-config=*|--config=*)
+            exec "#{libexec}/cli-proxy-api" "$@"
+            ;;
+        esac
+      done
+
+      config="${CLIPROXYAPI_CONFIG:-#{etc}/cliproxyapi/config.yaml}"
+      if [[ -f "$config" ]]; then
+        exec "#{libexec}/cli-proxy-api" -config "$config" "$@"
+      fi
+
+      exec "#{libexec}/cli-proxy-api" "$@"
+    EOS
+    chmod 0555, bin/"cliproxyapi"
+
+    etc.install "config.example.yaml" => "cliproxyapi/config.yaml"
     pkgshare.install "config.example.yaml"
     doc.install "README.md", "README_CN.md"
     prefix.install "LICENSE"
@@ -32,6 +54,9 @@ class Cliproxyapi < Formula
         #{pkgshare}/config.example.yaml
 
       Start manually:
+        cliproxyapi
+
+      Override config:
         cliproxyapi -config /path/to/config.yaml
     EOS
   end
