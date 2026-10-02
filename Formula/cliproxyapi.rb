@@ -1,17 +1,17 @@
 class Cliproxyapi < Formula
   desc "OpenAI/Gemini/Claude/Codex-compatible API router"
   homepage "https://github.com/router-for-me/CLIProxyAPI"
-  version "8.0.10"
+  version "8.0.11"
   license "MIT"
 
   depends_on :macos
 
   if Hardware::CPU.arm?
-    url "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.10/CLIProxyAPI_8.0.10_darwin_aarch64.tar.gz"
-    sha256 "e2080f54ee4d7940c77345440956ce592eef34da2910bd865d4928b75accd122"
+    url "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.11/CLIProxyAPI_8.0.11_darwin_aarch64.tar.gz"
+    sha256 "8732e3ac22199a0e514d4c26b123cdf0b9913cbebd77a9982dc6a190a038d392"
   else
-    url "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.10/CLIProxyAPI_8.0.10_darwin_amd64.tar.gz"
-    sha256 "2d5af1cf19cc0d887b96fde809f78a999438a65564ce19de5966b7d5b6c451ca"
+    url "https://github.com/router-for-me/CLIProxyAPI/releases/download/v8.0.11/CLIProxyAPI_8.0.11_darwin_amd64.tar.gz"
+    sha256 "fe5d1ada6609754010ced92ce4f4e538df31f8618becea6203ebb9ecdfc266a5"
   end
 
   livecheck do
@@ -63,6 +63,6 @@ class Cliproxyapi < Formula
 
   test do
     output = shell_output("#{bin}/cliproxyapi --help 2>&1")
-    assert_match "CLIProxyAPI Version: 8.0.10", output
+    assert_match "CLIProxyAPI Version: 8.0.11", output
   end
 end
